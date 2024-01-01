@@ -1,25 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ChercheBar from './ChercheBar'
 import Resultat from './Resultat'
 
-const list=[
-  {nom:"banane",type:"fruit"},
-  {nom:"orange",type:"fruit"},
-  {nom:"pomme",type:"fruit"},
-  {nom:"raisins",type:"fruit"},
-  {nom:"kiwi",type:"fruit"},
-  {nom:"tomate",type:"legume"},
-  {nom:"carotte",type:"legume"},
-  {nom:"pomme de terre",type:"legume"},
-  {nom:"navet",type:"legume"},
-  {nom:"poivron",type:"legume"}
-  ]
+// const list=[
+//   {nom:"banane",type:"fruit"},
+//   {nom:"orange",type:"fruit"},
+//   {nom:"pomme",type:"fruit"},
+//   {nom:"raisins",type:"fruit"},
+//   {nom:"kiwi",type:"fruit"},
+//   {nom:"tomate",type:"legume"},
+//   {nom:"carotte",type:"legume"},
+//   {nom:"pomme de terre",type:"legume"},
+//   {nom:"navet",type:"legume"},
+//   {nom:"poivron",type:"legume"}
+//   ]
 function App() {
+  const [fetchedData, setFetchedData] = useState([]);
   const [type, setType] = useState("")
   const [resultats, setResultats] = useState([])
+  useEffect(()=>{
+    fetch('https://fakestoreapi.com/products')
+    .then((response)=> response.json())
+    .then((data)=>setFetchedData(data))
+  }, [])
   const chercheBar = (type) => {
     setType(type)
-    setResultats(list.filter((e) => e.type.toUpperCase() === type.toUpperCase()))
+    setResultats(fetchedData.find((e) => e.id === parseInt(type)))
   }
   return (
     <div className='App' style={{'border' : '2px solid black', 'padding' : '20px', 'margin' : '20px'}}>
@@ -27,6 +33,7 @@ function App() {
       <ChercheBar funcChercheBar = {chercheBar}/>
       <h3>Type : {type}</h3>
       <Resultat ttt = {resultats}/>
+      {console.log(resultats)}
     </div>
   )
 }
