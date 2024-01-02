@@ -28,7 +28,7 @@ function App() {
     setResultats(fetchedData.find((e) => e.id === parseInt(type)))
   }
   return (
-    <div className='App' style={{'border' : '2px solid black', 'padding' : '20px', 'margin' : '20px'}}>
+    <div className='App' style={{'border' : '3px solid black', 'padding' : '20px', 'margin' : '20px'}}>
       <h1>App component</h1>
       <ChercheBar funcChercheBar = {chercheBar}/>
       <h3>Type : {type}</h3>
